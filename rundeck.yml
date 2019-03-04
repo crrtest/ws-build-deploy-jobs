@@ -1,0 +1,75 @@
+---
+
+svn_peace_password: '{{ lookup("rs_credstash","go.svn.password") }}'
+
+rundeck_job_ids:
+  prod:
+    scheduled_authx_cleanup: A5A7DE38-7D2A-47C2-865A-06D068FB5162
+  qa:
+    scheduled_authx_cleanup: A2440F39-F0E4-4634-97F1-A706578C7BF4
+  test:
+    scheduled_authx_cleanup: A46EC941-1441-4DF5-9A12-72F762C6DD44
+
+rundeck_acls:
+  batch:
+    - by:
+        group:
+          - AWS_Platform
+      description: Allow the platform team to run any job in the service batch project
+      for:
+        job:
+          - allow:
+              - read
+              - run
+              - runAs
+              - kill
+              - killAs
+            node:
+              - allow: '*'
+            resource:
+              - allow:
+                  - read
+                  - create
+                equals:
+                  kind: event
+    - by:
+        group:
+          - AWS_CRM
+      description: Allow the CRM team to run any job in queue_producer
+      for:
+        job:
+          - allow:
+              - read
+              - run
+              - runAs
+              - kill
+              - killAs
+            subset:
+              group:
+                - queue_producer
+        node:
+          - allow: '*'
+        resource:
+          - allow:
+              - read
+              - create
+            equals:
+              kind: event
+  system:
+    by:
+      group:
+        - AWS_CRM
+        - AWS_Platform
+    context:
+      application: rundeck
+    description: Allow platform to see the service project
+    for:
+      project:
+        - allow: read
+          equals:
+            name: service
+      resource:
+        - allow:
+            - read
+          equals:
+            kind: project

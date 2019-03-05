@@ -1,0 +1,18 @@
+---
+
+repo: 'ws-aws-app-deploy'
+branch: 'qa'
+description: 'Deploys my-new-lambda to the qa'
+uuid: '{{ rundeck_job_ids.qa["deploy_my-new-lambda"] }}'
+aws_env: 'qa'
+playbook: 'lambda_deploy.yml'
+playbook_inventory: 'aws_inventory.py'
+playbook_vars:
+  env: 'qa'
+  product: 'service'
+  app_name: 'my-new-lambda'
+  artifact_key: 'qa-my-new-lambda'
+# This needs the INVENTORY_ENV=prod for any migrations that are run
+# as the migrations are run on the Docker Batch server (currently only in prod)
+environment_variables:
+  INVENTORY_ENV: 'prod'

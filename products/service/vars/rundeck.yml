@@ -1,47 +1,29 @@
----
-rundeck_job_ids:
-  test:
-    deploy_my-new-lambda: B50FD3BB-4F3B-4444-9AB8-2CC142AAA796
-  qa:
-    deploy_my-new-lambda: FFA8762B-2834-4371-9E3A-F6F30425AAA4
-  prod:
-    deploy_my-new-lambda: 99B350A0-A9A7-46FE-AFD9-E37CF6554334
 rundeck_acls:
+  batch:
+  - by: {group: user}
+    description: Allow everyone to see the project
+    for:
+      job:
+      - allow: [read, run]
+        subset:
+          group: [test, qa, prod]
+      node:
+      - {allow: '*'}
+      resource:
+      - allow: [read]
+        equals: {kind: event}
   system:
-    context:
-      application: rundeck
-    by:
-      group: user
+    by: {group: user}
+    context: {application: rundeck}
+    description: Allow everyone to see the project
     for:
       project:
-      - equals:
-          name: public
-        allow:
-        - read
+      - allow: [read]
+        equals: {name: public}
       resource:
-      - equals:
-          kind: project
-        allow:
-        - read
-    description: Allow everyone to see the project
-  batch:
-  - description: Allow everyone to see the project
-    for:
-      node:
-      - allow: '*'
-      job:
-      - subset:
-          group:
-          - test
-          - qa
-          - prod
-        allow:
-        - read
-        - run
-      resource:
-      - equals:
-          kind: event
-        allow:
-        - read
-    by:
-      group: user
+      - allow: [read]
+        equals: {kind: project}
+rundeck_job_ids:
+  prod: {deploy_6CJ5P2QO16: 89AF1895-B29D-4EB1-9F6C-4B01E1A8579F, deploy_my-new-lambda: 99B350A0-A9A7-46FE-AFD9-E37CF6554334}
+  qa: {deploy_6CJ5P2QO16: D4A695C5-385D-4C60-ABCF-9B4B2609676A, deploy_my-new-lambda: FFA8762B-2834-4371-9E3A-F6F30425AAA4}
+  test: {deploy_6CJ5P2QO16: 94D3243A-8992-4F46-A361-76E42C1B0171, deploy_my-new-lambda: B50FD3BB-4F3B-4444-9AB8-2CC142AAA796}

@@ -1,0 +1,22 @@
+---
+
+repo_name: 'L1ZKEDNYCX'
+
+pipeline_config:
+  group: 'Service-Lambda'
+  pipeline:
+    name: '{{ repo_name }}'
+    label_template: '${COUNT}'
+    template: 'Universal_Lambda_Deployable'
+    environment_variables:
+      - name: RUNDECK_TEST_JOB_ID
+        value: '{{ rundeck_job_ids.test["deploy_L1ZKEDNYCX"] }}'
+      - name: RUNDECK_QA_JOB_ID
+        value: '{{ rundeck_job_ids.qa["deploy_L1ZKEDNYCX"] }}'
+      - name: RUNDECK_PROD_JOB_ID
+        value: '{{ rundeck_job_ids.prod["deploy_L1ZKEDNYCX"] }}'
+    materials:
+      - type: git
+        attributes:
+          name: 'GitHub'
+          url: 'git@github.com:lampo/{{ repo_name }}.git'

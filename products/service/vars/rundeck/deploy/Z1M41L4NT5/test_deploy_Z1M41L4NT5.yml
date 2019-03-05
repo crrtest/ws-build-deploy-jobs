@@ -1,0 +1,18 @@
+---
+
+repo: 'ws-aws-app-deploy'
+branch: 'test'
+description: 'Deploys Z1M41L4NT5 to the test'
+uuid: '{{ rundeck_job_ids.test["deploy_Z1M41L4NT5"] }}'
+aws_env: 'test'
+playbook: 'lambda_deploy.yml'
+playbook_inventory: 'aws_inventory.py'
+playbook_vars:
+  env: 'test'
+  product: 'service'
+  app_name: 'Z1M41L4NT5'
+  artifact_key: 'test-Z1M41L4NT5'
+# This needs the INVENTORY_ENV=prod for any migrations that are run
+# as the migrations are run on the Docker Batch server (currently only in prod)
+environment_variables:
+  INVENTORY_ENV: 'prod'

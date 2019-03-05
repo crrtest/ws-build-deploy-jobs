@@ -1,38 +1,47 @@
 ---
-
 rundeck_job_ids:
   test:
+    deploy_some-new-service: 3AD5FB10-7C6F-435A-A187-52229F53C4F6
   qa:
+    deploy_some-new-service: 699B6389-E3CB-4F55-8C50-19B90DA0FEC8
   prod:
-
+    deploy_some-new-service: B8348B5B-7B38-4424-ADFA-8C64DF606794
 rundeck_acls:
   system:
-    description: 'Allow everyone to see the project'
     context:
-      application: 'rundeck'
-    for:
-      resource:
-        - equals:
-            kind: project
-          allow: ['read']
-      project:
-        - equals:
-            name: 'public'
-          allow: ['read']
+      application: rundeck
     by:
       group: user
+    for:
+      project:
+      - equals:
+          name: public
+        allow:
+        - read
+      resource:
+      - equals:
+          kind: project
+        allow:
+        - read
+    description: Allow everyone to see the project
   batch:
-    - description: 'Allow everyone to see the project'
-      for:
-        resource:
-          - equals:
-              kind: event
-            allow: ['read']
-        job:
-          - subset:
-              group: ['test', 'qa', 'prod']
-            allow: ['read','run']
-        node:
-          - allow: '*' # allow read/run for all nodes
-      by:
-        group: user
+  - description: Allow everyone to see the project
+    for:
+      node:
+      - allow: '*'
+      job:
+      - subset:
+          group:
+          - test
+          - qa
+          - prod
+        allow:
+        - read
+        - run
+      resource:
+      - equals:
+          kind: event
+        allow:
+        - read
+    by:
+      group: user

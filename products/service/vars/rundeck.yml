@@ -1,17 +1,19 @@
 ---
 rundeck_job_ids:
   test:
+    deploy_X3NKEXCKU1: 55C7CC96-4C77-40D7-9425-F1BC49254C7B
     deploy_my-new-lambda: B50FD3BB-4F3B-4444-9AB8-2CC142AAA796
   qa:
+    deploy_X3NKEXCKU1: FA54A121-B8A7-44A2-88EC-21E859F6C0EE
     deploy_my-new-lambda: FFA8762B-2834-4371-9E3A-F6F30425AAA4
   prod:
+    deploy_X3NKEXCKU1: F1511D63-0AB8-4949-B8AD-3430F81A99E2
     deploy_my-new-lambda: 99B350A0-A9A7-46FE-AFD9-E37CF6554334
 rundeck_acls:
   system:
     context:
       application: rundeck
-    by:
-      group: user
+    description: Allow everyone to see the project
     for:
       project:
       - equals:
@@ -23,7 +25,8 @@ rundeck_acls:
           kind: project
         allow:
         - read
-    description: Allow everyone to see the project
+    by:
+      group: user
   batch:
   - description: Allow everyone to see the project
     for:

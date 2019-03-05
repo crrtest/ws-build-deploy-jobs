@@ -1,0 +1,22 @@
+---
+
+repo_name: 'some-new-service'
+
+pipeline_config:
+  group: 'Service-Docker'
+  pipeline:
+    name: '{{ repo_name }}'
+    label_template: '${COUNT}'
+    template: 'Maven_With_Docker_Deployable'
+    environment_variables:
+      - name: RUNDECK_TEST_JOB_ID
+        value: '{{ rundeck_job_ids.test["deploy_some-new-service"] }}'
+      - name: RUNDECK_QA_JOB_ID
+        value: '{{ rundeck_job_ids.qa["deploy_some-new-service"] }}'
+      - name: RUNDECK_PROD_JOB_ID
+        value: '{{ rundeck_job_ids.prod["deploy_some-new-service"] }}'
+    materials:
+      - type: git
+        attributes:
+          name: 'GitHub'
+          url: 'git@github.com:lampo/{{ repo_name }}.git'

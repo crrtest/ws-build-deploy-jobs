@@ -1,19 +1,23 @@
 ---
 rundeck_job_ids:
   test:
+    deploy_FIKVTARY70: E4F85807-D344-43A2-B1F2-6F78504C55AD
     deploy_my-new-lambda: B50FD3BB-4F3B-4444-9AB8-2CC142AAA796
     deploy_YN83FIWUX5: C44A3A56-8216-4E0A-A5DE-A45737E57791
   qa:
+    deploy_FIKVTARY70: 8F1055C7-760A-4183-8DE6-81977CCF19C4
     deploy_my-new-lambda: FFA8762B-2834-4371-9E3A-F6F30425AAA4
     deploy_YN83FIWUX5: A6D9ADF4-7C2A-4CED-98D8-39E50442F018
   prod:
+    deploy_FIKVTARY70: B9050611-857C-46D3-A917-3F33C02B5581
     deploy_my-new-lambda: 99B350A0-A9A7-46FE-AFD9-E37CF6554334
     deploy_YN83FIWUX5: CFA43AC0-CB85-430B-8791-0A8E858D3963
 rundeck_acls:
   system:
     context:
       application: rundeck
-    description: Allow everyone to see the project
+    by:
+      group: user
     for:
       project:
       - equals:
@@ -25,8 +29,7 @@ rundeck_acls:
           kind: project
         allow:
         - read
-    by:
-      group: user
+    description: Allow everyone to see the project
   batch:
   - description: Allow everyone to see the project
     for:

@@ -1,0 +1,22 @@
+---
+
+repo_name: 'X95V4NO1S2'
+
+pipeline_config:
+  group: 'service-lambda'
+  pipeline:
+    name: '{{ repo_name }}'
+    label_template: '${COUNT}'
+    template: 'AWS_Lambda_Universal_Deployable'
+    environment_variables:
+      - name: RUNDECK_TEST_JOB_ID
+        value: '{{ rundeck_job_ids.test["deploy_X95V4NO1S2"] }}'
+      - name: RUNDECK_QA_JOB_ID
+        value: '{{ rundeck_job_ids.qa["deploy_X95V4NO1S2"] }}'
+      - name: RUNDECK_PROD_JOB_ID
+        value: '{{ rundeck_job_ids.prod["deploy_X95V4NO1S2"] }}'
+    materials:
+      - type: git
+        attributes:
+          name: 'GitHub'
+          url: 'git@github.com:lampo/{{ repo_name }}.git'

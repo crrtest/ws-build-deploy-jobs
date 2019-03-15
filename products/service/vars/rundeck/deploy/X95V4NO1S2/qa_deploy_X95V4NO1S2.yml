@@ -1,0 +1,13 @@
+---
+
+repo: 'ws-aws-app-deploy'
+branch: 'qa'
+description: 'Deploys X95V4NO1S2 to the qa'
+uuid: '{{ rundeck_job_ids.qa["deploy_X95V4NO1S2"] }}'
+aws_env: 'qa'
+playbook: 'aws_lambda_deploy.yml'
+playbook_vars:
+  env: 'qa'
+  product: 'service'
+  app_name: 'X95V4NO1S2'
+  artifact_key: 'qa-X95V4NO1S2'
